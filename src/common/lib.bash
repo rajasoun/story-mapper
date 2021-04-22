@@ -1,4 +1,4 @@
-#!/usr/bin/env bash 
+#!/usr/bin/env bash
 
 # Checks if required env variables for instance is all set
 function raise(){
@@ -22,9 +22,9 @@ function display_url_status(){
     HOST="$1"
     # shellcheck disable=SC1083
     if [[ "$(curl -s -o /dev/null -L -w ''%{http_code}'' "${HOST}")" != "200" ]] ; then
-        echo "https://${HOST}  -> Down"
+        echo "http://${HOST}  -> Down"
     else
-        echo "https://${HOST}  -> Up"
+        echo "http://${HOST}  -> Up"
     fi
 }
 

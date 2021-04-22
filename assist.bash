@@ -25,16 +25,16 @@ case $action in
       docker-compose -f $COMPOSE_FILE up -d
       ;;
     status)
-      display_url_status "http://localhost:8080"
+      display_url_status "localhost:8080"
       docker-compose -f $COMPOSE_FILE ps
       ;;
     down)
       docker-compose -f $COMPOSE_FILE down
       ;;
     backup)
-      [ -e file ] && rm -f backup/dump_"${ts}"
+      [ -e file ] && rm -f backup/dump_"${ts}.gz"
       docker exec -t "${DB_CONTAINER_NAME}" \
-          pg_dumpall -c -U "${FEATMAP_DB_USER}"  \
+          pg_dumpall --data-only -U "${FEATMAP_DB_USER}"  \
           | gzip >  backup/dump_"${ts}".gz || echo "Backup ❌ "
 
       echo "Backup for ${DB_CONTAINER_NAME} DONE ✅"
@@ -53,8 +53,8 @@ Commands:
   up                   -> Brings up application and services
   status               -> Status of the application and services
   down                 -> Brings down application and services
-  backup               -> Backupup DB
-  restore              -> Restores DB
+  backup               -> Data Only Backup DB
+  restore              -> Restore Data to DB
 EOF
     ;;
 esac
