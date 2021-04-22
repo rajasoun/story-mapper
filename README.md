@@ -4,10 +4,10 @@ Container version of [Featmap]() for building, planning and communicating produc
 
 ## Getting Started
 
-1. `time DOCKER_BUILDKIT=1 docker-compose build` for building the source
-1. `docker-compose up -d` for starting the tool
-1. Visit http://localhost:8080 to access the tool
-1. `docker-compose down` for shutting down the tool
+1. `./assist.bash build` for building the source
+1. `./assist.bash up ` for starting the application
+1. `./assist.bash status ` to get status of the application and services
+1. `./assist.bash` for help
 
 ## Thanks
 

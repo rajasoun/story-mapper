@@ -1,0 +1,59 @@
+version: "3.9"
+services:
+  postgres:
+    container_name: ${DB_CONTAINER_NAME}
+    image: postgres:13.2-alpine
+    restart: unless-stopped #always
+    environment:
+      POSTGRES_DB: ${FEATMAP_DB}
+      POSTGRES_USER: ${FEATMAP_DB_USER}
+      POSTGRES_PASSWORD: ${FEATMAP_DB_PASSWORD}
+      PGDATA: ${FEATMAP_DB_STORAGE}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${FEATMAP_DB_USER}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - postgres:${FEATMAP_DB_STORAGE}
+    networks:
+      - featmap
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+      PGADMIN_CONFIG_SERVER_MODE: "False"
+    volumes:
+      - pgadmin:${PGADMIN_DB_STORAGE}
+    ports:
+      - "${PGADMIN_PORT_HTTP_PORT}:80"
+    networks:
+      - featmap
+
+  featmap:
+    container_name: ${APP_CONTAINER_NAME}
+    image: amborle/featmap
+    restart: unless-stopped #always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - ${FEATMAP_HTTP_PORT}:${FEATMAP_HTTP_PORT}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ${PWD}/story-mapper/conf.json:/opt/featmap/conf.json
+    networks:
+      - featmap
+
+networks:
+  featmap:
+    driver: bridge
+
+volumes:
+  postgres:
+  pgadmin:
