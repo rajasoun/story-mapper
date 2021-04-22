@@ -1,0 +1,16 @@
+{
+  "template": "https://github.com/rajasoun/cookiecutter-shift-left-security",
+  "commit": "0ba6b63b0fab622af96dbdeaf7315c48e4a4ce6d",
+  "checkout": null,
+  "context": {
+    "cookiecutter": {
+      "project_name": "story-mapper",
+      "project_slug": "story-mapper",
+      "project_description": "User story mapping tool to build, plan and communicate product backlog and release",
+      "security_mailer": "devsecops@icloud.com",
+      "author_full_name": "Raja. S",
+      "_template": "https://github.com/rajasoun/cookiecutter-shift-left-security"
+    }
+  },
+  "directory": null
+}
