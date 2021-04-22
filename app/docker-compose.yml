@@ -19,20 +19,6 @@ services:
     networks:
       - featmap
 
-  pgadmin:
-    image: dpage/pgadmin4:latest
-    restart: unless-stopped
-    environment:
-      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
-      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
-      PGADMIN_CONFIG_SERVER_MODE: "False"
-    volumes:
-      - pgadmin:${PGADMIN_DB_STORAGE}
-    ports:
-      - "${PGADMIN_PORT_HTTP_PORT}:80"
-    networks:
-      - featmap
-
   featmap:
     container_name: ${APP_CONTAINER_NAME}
     image: amborle/featmap
