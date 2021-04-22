@@ -4,13 +4,13 @@ set -eo pipefail
 IFS=$'\n\t'
 
 # shellcheck source=/dev/null
-source "story-mapper/.env"
+source "app/.env"
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # shellcheck source=/dev/null
 source "$SCRIPT_DIR/src/load.bash"
 
-COMPOSE_FILE="story-mapper/docker-compose.yml"
+COMPOSE_FILE="app/docker-compose.yml"
 
 opt="$1"
 ts="latest" #"$(date +%Y-%m-%d_%H_%M_%S)"
